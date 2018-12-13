@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>People List</title>
+</head>
+<body>
+
+<br>
+<h3>List of Students</h3>
+<a href="/canvas/addStudents/">ADD Students</a>
+<br>
+{% for i in listofStudent%}
+    <h4> {{ i.ub_id }},{{ i }} <br></h4>
+{% endfor %}
+</body>
+</html>

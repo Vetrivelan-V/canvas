@@ -11,16 +11,19 @@ class LoginForm(forms.Form):
 
    def clean_message(self):
        username = self.cleaned_data.get("username")
+       password=self.cleaned_data.get("password")
        dbuser = CanvasUser.objects.filter(email_id=username)
 
        if not dbuser:
            raise forms.ValidationError("User does not exist in our db!")
        else:
-           print(dbuser[0].ub_id)
-           user=CanvasUser.objects.get(pk=dbuser[0].ub_id)
-           user.last_login=datetime.now()
-           user.save()
-           return user
+           if dbuser[0].password == password:
+               print(dbuser[0].ub_id)
+               dbuser[0].last_login=datetime.now()
+               dbuser[0].save()
+               return dbuser[0]
+           else:
+               raise forms.ValidationError("User password does not match")
 
 class DocumentForm(forms.Form):
     docfile = forms.FileField(

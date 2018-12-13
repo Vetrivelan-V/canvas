@@ -13,7 +13,7 @@ from canvas.forms import LoginForm
 #     return HttpResponse(text)
 #
 # # Create your views here.
-from canvas.models import Course, Announcement, Assignment, CanvasUser
+from canvas.models import Course, Announcement, Assignment, CanvasUser, Registerd
 
 
 def home_func(request):
@@ -21,25 +21,28 @@ def home_func(request):
         # Get the posted form
 
         studentLogin = LoginForm(request.POST)
-        value=0
+
         if studentLogin.is_valid():
             try:
                 username = studentLogin.clean_message()
                 print(username)
-            except forms.ValidationError:
-                value=-1
-        else:
-            value=-1
-        if value==0:
-            course=Course.objects.filter(user=username.ub_id)
-            response =render(request, 'home_page.html', {"userinfo": username, "lastlogin":username.last_login, "course":course})
-            response.set_cookie('last_connection', datetime.now())
-            response.set_cookie('ub_id', username.ub_id)
-            response.set_cookie('user_type', username.user_type)
-            return response
-        else:
+                if username.user_type==1:
+                    course = Course.objects.filter(user=username.ub_id)
+                else:
+                    reg=Registerd.objects.filter(student=username.ub_id)
+                    course=list()
+                    for items in reg:
+                        course.append(items.course_id)
 
-            return  render(request, "login.html", {})
+                response = render(request, 'home_page.html',
+                                  {"userinfo": username, "lastlogin": username.last_login, "course": course})
+                response.set_cookie('last_connection', datetime.now())
+                response.set_cookie('ub_id', username.ub_id)
+                response.set_cookie('user_type', username.user_type)
+                return response
+
+            except forms.ValidationError as e:
+              return  render(request, "login.html", {"error_message":e.message})
 
 def login_func(request):
     return render(request, "login.html", {})
@@ -67,17 +70,25 @@ def announcements_func(request):
     print(listofAnnoucement)
     return render(request, 'announcementlist.html', {"listofAnnoucement": listofAnnoucement})
 
+def people(request):
+    ub_id = request.COOKIES.get('ub_id')
+    user_type = request.COOKIES.get('user_type')
+    course_id = request.COOKIES.get('course_id')
+    listofStudent=Course.objects.get(pk=course_id)
+    listofStudent.students
+    return render(request, 'peoplelist.html', {"listofStudent": listofStudent.students.all()})
+
 
 
 def addUpdateCourse(request):
     return render(request,"addcourse.html",{})
 
-def assignments_func(request):
+def assignments_func(request,type):
     ub_id = request.COOKIES.get('ub_id')
     user_type = request.COOKIES.get('user_type')
     course_id = request.COOKIES.get('course_id')
-    listOfAssignments=Assignment.objects.filter(course=course_id,user=ub_id)
-    return render(request, 'assignment_upload.html',{"listOfAssignments":listOfAssignments})
+    listOfAssignments=Assignment.objects.filter(course=course_id,user=ub_id,type=type)
+    return render(request, 'assignment_upload.html',{"listOfAssignments":listOfAssignments,"type":type})
 
 def assignment_add(request):
     folder = request.path.replace("/", "_")
@@ -87,7 +98,7 @@ def assignment_add(request):
     ub_id = request.COOKIES.get('ub_id')
     dirpath
     folderPath=course_id+'/'+ub_id+"/"
-
+    type=request.POST.get('type')
     # create the folder if it doesn't exist.
     try:
         os.mkdir(os.path.join(dirpath,course_id))
@@ -108,7 +119,7 @@ def assignment_add(request):
         return HttpResponse(html)
     canvas_user=CanvasUser.objects.get(pk=ub_id)
     course=Course.objects.get(pk=course_id)
-    assignment=Assignment.objects.create(file_only_name=uploaded_filename,file_name="http://localhost/canvas/"+folderPath+uploaded_filename,type=1,user=canvas_user,course=course)
+    assignment=Assignment.objects.create(file_only_name=uploaded_filename,file_name="http://localhost/canvas/"+folderPath+uploaded_filename,type=type,user=canvas_user,course=course)
 
     html = "<html><body>SAVED</body></html>"
     return HttpResponse(html)

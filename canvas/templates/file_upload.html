@@ -6,31 +6,19 @@
 </head>
 <body>
 {{ listOfAssignments }}
-{% if type == "1" %}
 List of Assignments
-{% else %}
-List of Files
-{% endif %}
 <br>
 {% for i in listOfAssignments%}
     <h4> {{ i.create_date }},{{ i.submissionDate }},<a href="{{ i.file_name }}">{{  i.file_only_name }}</a> <br></h4>
 {% endfor %}
-{% if type == "1" %}
 Add Assignment
-{% else %}
-Add Files
-{% endif %}
       <form name = "form" enctype = "multipart/form-data"
          action = "{% url "canvas:assignment_add" %}" method = "POST" >{% csrf_token %}
-{% if type == "1" %}
+
          <div style = "max-width:470px;">
-            <input type="text" size="32" value="1" name="type"  hidden   />
+            <input type="text" size="32" value="2" name="type" disabled hidden  />
          </div>
-{% else %}
-           <div style = "max-width:470px;">
-            <input type="text" size="32" value="2" name="type"  hidden   />
-         </div>
-          {% endif %}
+
          <br>
 
          <div style = "max-width:470px;">
@@ -46,8 +34,8 @@ Add Files
             <center>
 
                <button style = "border:0px;background-color:#4285F4; margin-top:8%;
-                  height:35px; width:80%; margin-left:19%;" type = "submit" value = "Upload" >
-                  <strong>Upload</strong>
+                  height:35px; width:80%; margin-left:19%;" type = "submit" value = "Login" >
+                  <strong>Login</strong>
                </button>
 
             </center>
