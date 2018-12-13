@@ -12,7 +12,7 @@ User Last Login {{ lastlogin }}<br>
 <a href="/canvas/details/0/">ADD COURSE</a>
 <br>
 {% for i in course%}
-    <h4><a href="/canvas/details/{{ i.course_id }}/">{{ i.course_name }}</a><br></h4>
+    <h4><a href="/canvas/coursedetails_func/{{ i.course_id }}/">{{ i.course_name }}</a><br></h4>
 {% endfor %}
 </body>
 </html>

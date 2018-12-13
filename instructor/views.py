@@ -32,6 +32,6 @@ def instructorlogin(request):
         # else:
         #     print("Someone tried to login and failed.")
         #     print("They used username: {} and password: {}".format(username,password))
-        #     return HttpResponse("Invalid login details given")
+        #     return HttpResponse("Invalid login coursedetails_func given")
     else:
         return render(request, 'instructor/instructorlogin.html', locals())

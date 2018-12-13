@@ -69,6 +69,8 @@ TEMPLATES = [
         },
     },
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, '/var/www/html/canvas')
+MEDIA_URL = '/media/'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',

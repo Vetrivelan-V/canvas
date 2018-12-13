@@ -38,10 +38,11 @@ class Registerd(models.Model):
     def __str__(self):
         return  str(self.registerd)+" | "+str(self.course_id)+" | "+str(self.student)
 class Assignment(models.Model):
-    file_name=models.CharField(max_length=30)
+    file_name=models.URLField(max_length=300)
+    file_only_name=models.CharField(max_length=40)
     create_date = models.DateTimeField(auto_now_add=True)
     assignment_id=models.AutoField(primary_key=True)
-    grade=models.CharField(max_length=1)
+    grade=models.CharField(max_length=1,default='u')
     type=models.IntegerField(default=1)
     submissionDate=models.DateTimeField(auto_now_add=True,blank=True)
     user = models.ForeignKey(CanvasUser, on_delete=models.CASCADE)
@@ -64,3 +65,5 @@ class Announcement(models.Model):
         ordering = ('create_date',)
 
 
+class Document(models.Model):
+    docfile = models.FileField(upload_to='documents/%Y/%m/%d')

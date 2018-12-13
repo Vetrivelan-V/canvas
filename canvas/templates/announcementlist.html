@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Announcement List</title>
+</head>
+<body>
+
+<br>
+<h3>List of Announcements</h3>
+<a href="/canvas/announcements_func/0/">ADD Announcement</a>
+<br>
+{% for i in listofAnnoucement%}
+    <h4> {{ i.create_date }},{{ i.announcement_details }} <br></h4>
+{% endfor %}
+</body>
+</html>
