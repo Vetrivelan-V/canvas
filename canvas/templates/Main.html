@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Loggedin</title>
+</head>
+<body>
+User Last Login {{ lastlogin }}<br>
+{{ userinfo }}
+<br>
+<h3>List of Course</h3>
+<a href="/canvas/details/0/">ADD COURSE</a>
+<br>
+{% for i in course%}
+    <h4><a href="/canvas/details/{{ i.course_id }}/">{{ i.course_name }}</a><br></h4>
+{% endfor %}
+</body>
+</html>

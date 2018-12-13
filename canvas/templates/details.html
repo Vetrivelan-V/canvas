@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CANVAS</title>
+</head>
+ <body>
+ {% if course %}
+     Test
+ {% else %}
+     Hellow
+ {% endif %}
+<br>
+ <a href="/canvas/announcements/">Announcements</a><br>
+ <a href="/canvas/assignments/">Assignments</a><br>
+ <a href="/canvas/files/">Files</a><br>
+ <a href="/canvas/people/">People</a><br>
+<!--
+   <form name = "form" action = "{% url 'canvas:addUpdateCourse' %}"
+         method = "POST" >{% csrf_token %}
+
+
+
+         <div style = "max-width:470px;">
+            <center>
+               Course Name:<input type = "text" style = "margin-left:20%;"
+                  placeholder = "Identifiant" name = "Course" value="{{   course.course_name }} "/>
+            </center>
+              <center>
+                  {% if course %}
+              Created Date: {{ course.create_date  }}
+                  {% endif %}
+            </center>
+         </div>
+
+         <br>
+
+
+
+         <br>
+
+         <div style = "max-width:470px;">
+            <center>
+                {% if  course  %}
+
+
+                   <button style = "border:0px; background-color:#4285F4; margin-top:8%;
+                  height:35px; width:80%;margin-left:19%;" type = "submit"
+                  value = "Update" >
+                   Update
+                    {% else %}
+               </button>
+                      <button style = "border:0px; background-color:#4285F4; margin-top:8%;
+                  height:35px; width:80%;margin-left:19%;" type = "submit"
+                  value = "Add" >
+                    </button>
+                    Add
+            {% endif %}
+            </center>
+         </div>
+
+      </form>
+==>
+   </body>
+</html>
