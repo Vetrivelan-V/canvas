@@ -9,7 +9,10 @@ User Last Login {{ lastlogin }}<br>
 {{ userinfo }}
 <br>
 <h3>List of Course</h3>
+
+{% if user_type == "1"%}
 <a href="/canvas/details/0/">ADD COURSE</a>
+{% endif %}
 <br>
 {% for i in course%}
     <h4><a href="/canvas/coursedetails_func/{{ i.course_id }}/">{{ i.course_name }}</a><br></h4>

@@ -8,8 +8,10 @@
 
 <br>
 <h3>List of Students</h3>
+{% if user_type == "1" %}
 <a href="/canvas/addStudents/">ADD Students</a>
 <br>
+{% endif %}
 {% for i in listofStudent%}
     <h4> {{ i.ub_id }},{{ i }} <br></h4>
 {% endfor %}

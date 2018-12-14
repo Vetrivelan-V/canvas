@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^assignment_add/$', views.assignment_add, name='assignment_add'),
     url(r'^addUpdateCourse/$', views.addUpdateCourse, name='addUpdateCourse'),
     url(r'^people/$', views.people, name='people'),
+    url(r'^grades/$', views.grades, name='grades'),
 
     #url('hello/(\d+)', views.hello, name='hello'),
 

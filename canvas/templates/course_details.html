@@ -5,16 +5,12 @@
     <title>CANVAS</title>
 </head>
  <body>
- {% if course %}
-     Test
- {% else %}
-     Hellow
- {% endif %}
 <br>
  <a href="/canvas/announcements_func/">Announcements</a><br>
  <a href="/canvas/assignments_func/1/">Assignments</a><br>
  <a href="/canvas/assignments_func/2/">Files</a><br>
  <a href="/canvas/people/">Students</a><br>
+ <a href="/canvas/grades/">Grades</a><br>
 <!--
    <form name = "form" action = "{% url 'canvas:addUpdateCourse' %}"
          method = "POST" >{% csrf_token %}

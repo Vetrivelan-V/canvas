@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+
 class CanvasUser(models.Model):
     first_name= models.CharField(max_length=30)
     last_name=models.CharField(max_length=30)
@@ -44,6 +46,7 @@ class Assignment(models.Model):
     assignment_id=models.AutoField(primary_key=True)
     grade=models.CharField(max_length=1,default='u')
     type=models.IntegerField(default=1)
+    parent_Id = models.ForeignKey('self', on_delete=models.CASCADE,null=True,blank=True)
     submissionDate=models.DateTimeField(auto_now_add=True,blank=True)
     user = models.ForeignKey(CanvasUser, on_delete=models.CASCADE)
     course=models.ForeignKey(Course,on_delete=models.CASCADE)

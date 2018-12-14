@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Grades List</title>
+</head>
+<body>
+
+<br>
+<h3>Grade List</h3>
+{% for i in listOfAssignments%}
+    <h4> {{ i.grade }}-{{ i }} <br></h4>
+{% endfor %}
+</body>
+</html>

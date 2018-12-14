@@ -8,10 +8,12 @@
 
 <br>
 <h3>List of Announcements</h3>
+{% if user_type == "1"%}
 <a href="/canvas/addannouncement/">ADD Announcement</a>
+{% endif %}
 <br>
 {% for i in listofAnnoucement%}
-    <h4> {{ i.create_date }},{{ i.announcement_details }} <br></h4>
+    <h4> {{ i.create_date }}-{{ i.announcement_details }} <br></h4>
 {% endfor %}
 </body>
 </html>

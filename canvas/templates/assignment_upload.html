@@ -13,47 +13,76 @@
 {% endif %}
 <br>
 {% for i in listOfAssignments %}
-    <h4> {{ i.create_date }},{{ i.submissionDate }},<a href="{{ i.file_name }}">{{ i.file_only_name }}</a> <br></h4>
-{% endfor %}
-{% if type == "1" %}
-    Add Assignment
-{% else %}
-    Add Files
-{% endif %}
-<form name="form" enctype="multipart/form-data"
-      action="{% url "canvas:assignment_add" %}" method="POST">{% csrf_token %}
-    {% if type == "1" %}
-        <div style="max-width:470px;">
-            <input type="text" size="32" value="1" name="type" hidden/>
-        </div>
-    {% else %}
-        <div style="max-width:470px;">
-            <input type="text" size="32" value="2" name="type" hidden/>
-        </div>
+    {% if not i.parent_Id %}
+    <h4>Created Date {{ i.create_date }}<br>Submission Date{{ i.submissionDate }}<a href="{{ i.file_name }}">{{ i.file_only_name }}</a>
+        {% if user_type != "1"  %}
+            {% if type == "1" %}
+            <br>Uploaded Files
+            {% for items in listOfAssignments %}
+            {% if items.parent_Id.assignment_id == i.assignment_id %}
+               <br><a href="{{ items.file_name}}">{{ items.file_only_name }}</a>
+                 {% endif %}
+            {% endfor %}
+            <form name="form" enctype="multipart/form-data"
+                  action="{% url "canvas:assignment_add" %}" method="POST">{% csrf_token %}
+                {% if type == "1" %}
+                        <input type="text" size="32" value="1" name="type" hidden/>
+                {% else %}
+                        <input type="text" size="32" value="2" name="type" hidden/>
+                {% endif %}
+                         <input type="text" size="32" value="{{ i.assignment_id }}" name="parent_id" hidden/>
+                        <input type="file"
+                               placeholder="file" name="file"/>
+                        <button   type="submit" value="Upload">
+                            <strong>Upload</strong>
+                        </button>
+
+
+            </form>{% if i.parent_Id %} {{ i.parent_Id.file_name }} {% endif %}{% endif %} <br></h4>
+            {% endif %}
     {% endif %}
-    <br>
+{% endfor %}
+{% if user_type == "1" %}
+    {% if type == "1" %}
+        Add Assignment
+    {% else %}
+        Add Files
+    {% endif %}
+    <form name="form" enctype="multipart/form-data"
+          action="{% url "canvas:assignment_add" %}" method="POST">{% csrf_token %}
+        {% if type == "1" %}
+            <div style="max-width:470px;">
+                <input type="text" size="32" value="1" name="type" hidden/>
+            </div>
+        {% else %}
+            <div style="max-width:470px;">
+                <input type="text" size="32" value="2" name="type" hidden/>
+            </div>
+        {% endif %}
+        <br>
 
-    <div style="max-width:470px;">
-        <center>
-            <input type="file" style="margin-left:20%;"
-                   placeholder="file" name="file"/>
-        </center>
-    </div>
+        <div style="max-width:470px;">
+            <center>
+                <input type="file" style="margin-left:20%;"
+                       placeholder="file" name="file"/>
+            </center>
+        </div>
 
-    <br>
+        <br>
 
-    <div style="max-width:470px;">
-        <center>
+        <div style="max-width:470px;">
+            <center>
 
-            <button style="border:0px;background-color:#4285F4; margin-top:8%;
+                <button style="border:0px;background-color:#4285F4; margin-top:8%;
                   height:35px; width:80%; margin-left:19%;" type="submit" value="Upload">
-                <strong>Upload</strong>
-            </button>
+                    <strong>Upload</strong>
+                </button>
 
-        </center>
-    </div>
+            </center>
+        </div>
 
-</form>
+    </form>
+{% endif %}
 
 </body>
 </html>
